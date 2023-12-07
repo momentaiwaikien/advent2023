@@ -4,41 +4,47 @@ var getcoords = (string key) => {
   return key.Split(':').Select(k => int.Parse(k)).ToArray();
 };
 
-var getSearchCoords = (int height, int len, int[] locs) => {
-  var searchLocs = new List<string>();
-  //left
-  if (locs[0]-1 > -1) searchLocs.Add($"{locs[0]-1}:{locs[1]}");
-  //topleft
-  if (locs[0]-1 > -1 && locs[1]-1 > -1) searchLocs.Add($"{locs[0]-1}:{locs[1]-1}");
-  //top
-  if (locs[1]-1 > -1) searchLocs.Add($"{locs[0]}:{locs[1]-1}");
-  //topright
-  if (locs[0]+1 < len && locs[1]-1 > -1) searchLocs.Add($"{locs[0]+1}:{locs[1]-1}");
-  //right
-  if (locs[0]+1 < len) searchLocs.Add($"{locs[0]+1}:{locs[1]}");
-  //bottomright
-  if (locs[0]+1 < len && locs[1]+1 < height) searchLocs.Add($"{locs[0]+1}:{locs[1]+1}");
-  //bottom
-  if (locs[1]+1 < height) searchLocs.Add($"{locs[0]}:{locs[1]+1}");
-  //bottomleft
-  if (locs[0]-1 > -1 && locs[1]+1 < height) searchLocs.Add($"{locs[0]-1}:{locs[1]+1}");
-  return searchLocs;
+var getSearchCoords = (string key) => {
+  var locs = getcoords(key);
+  var x = locs[0];
+  var y = locs[1];
+  return new List<string>
+  {
+    //left
+    $"{x - 1}:{y}",
+    //topleft
+    $"{x - 1}:{y - 1}",
+    //top
+    $"{x}:{y - 1}",
+    //topright
+    $"{x + 1}:{y - 1}",
+    //right
+    $"{x + 1}:{y}",
+    //bottomright
+    $"{x + 1}:{y + 1}",
+    //bottom
+    $"{x}:{y + 1}",
+    //bottomleft
+    $"{x - 1}:{y + 1}"
+  };
 };
 
 var matchlist = new List<KeyValuePair<int, int>>();
+var numIndex = new Dictionary<int, int>();
 
-var returnMatch = (List<string> searchLocs, Dictionary<string, int> locs) => {
-  var matches = searchLocs.Select(x => {
-    var v = locs.GetValueOrDefault(x, 0);
-    if(v > 0)
+var returnMatch = (
+    KeyValuePair<string,int> searchLoc,
+    Dictionary<string, string> ilocs) 
+  => {
+  var toSearch = getSearchCoords(searchLoc.Key);
+   toSearch.ForEach(x => {
+    var v ="";
+    if(ilocs.TryGetValue(x, out v))
     {
-      matchlist.Add(new KeyValuePair<int, int>(getcoords(x)[1], v)); 
+      matchlist.Add(new KeyValuePair<int, int>(searchLoc.Value, numIndex[searchLoc.Value])); 
     }
-    //Console.WriteLine($"{x} -- {v}");
-    return v;
-    }).Distinct();
-
-  return matches;
+    
+    });
 };
 
 //Console.WriteLine();
@@ -56,47 +62,77 @@ List<string> numbers = string.Join('.', Regex.Split(strings, @"\D|\.+")).Split('
 var rownum = 0;
 var incrementRowNum = () => rownum += 1;
 var getRowNum = () => rownum;
+var iter = 0;
 
 rows.ForEach(row => { 
   numbers.Distinct().ToList().ForEach(n => {
 
-    var found = Regex.Match(row, $"(?<=^|[\\D])+({n})(?=$|[\\D])+");
+    var matches = Regex.Matches(row, $"(?<=^|[\\D])+({n})(?=$|[\\D])+");
 
-    if (found.Success)
+    foreach(Match found in matches)
     {
-      //Console.WriteLine($"{getRowNum()}=={row} --- index {found.Index} number {n}");
-      for(var i = 0; i < n.Length; i++)
+      if (found.Success)
       {
-        var locate = $"{getRowNum()}:{found.Index+i}";
-        //Console.WriteLine($"Added Location {locate}");
-        locations.Add(locate, int.Parse(n));
+        numIndex.Add(iter, int.Parse(n));
+
+        //Console.WriteLine($"{getRowNum()}=={row} --- index {found.Index} number {n}");
+        for(var i = 0; i < n.Length; i++)
+        {
+          var locate = $"{found.Index+i}:{getRowNum()}";
+          //Console.WriteLine($"Added Location {locate}");
+          locations.Add(locate, iter);
+        }
+        iter++;
       }
     }
   });
-  Console.WriteLine($"{row}");
 
   for(int i = 0; i < row.Length; i++)
   {
     if(!Regex.IsMatch($"{row[i]}", @"(\d|\.)+"))
     {
-      Console.WriteLine($"item {row[i]} location {getRowNum()}:{i}");
-      itemLocs.Add($"{getRowNum()}:{i}", $"{row[i]}");
+      //Console.WriteLine($"item {row[i]} location {i}:{getRowNum()}");
+      itemLocs.Add($"{i}:{getRowNum()}", $"{row[i]}");
     }
   }
   incrementRowNum();
 });
 
 //locations.ToList().ForEach(x => Console.WriteLine($"{x.Key}-{x.Value}"));
+//numIndex.ToList().ForEach(x => Console.WriteLine($"{x.Key}-{x.Value}"));
 //itemLocs.ToList().ForEach(x => Console.WriteLine($"{x.Key}-{x.Value}"));
 
- var kk = itemLocs.ToList().SelectMany(l => {
-  var loc = getcoords(l.Key);
-  var searchLocs = getSearchCoords(rows.Count, rows[loc[0]].Length, loc);
-  var matches = returnMatch(searchLocs, locations);
-  return matches;
+ locations.ToList().ForEach(l => {
+  returnMatch(l, itemLocs);
 });
 
-Console.WriteLine(kk.Distinct().Sum(x => x));
 
-Console.WriteLine(matchlist.DistinctBy(x => $"{x.Key}:{x.Value}").Sum(x => x.Value));
+Console.WriteLine(matchlist.DistinctBy(x => x.Key).Sum(x => x.Value));
+
+//Draw it for diffchecking
+/*var abc = locations.Select(x => getcoords(x.Key));
+
+var def = itemLocs.Select(x => getcoords(x.Key));
+
+var things = new List<string>();
+things.AddRange(abc.Select(x => $"{x[1]}:{x[0]}"));
+things.AddRange(def.Select(x => $"{x[1]}:{x[0]}"));
+
+var abcMaxX = abc.Max(x => x[0]);
+var defMaxX = def.Max(x => x[0]);
+var abcMaxY = abc.Max(x => x[1]);
+var defMaxY = def.Max(x => x[1]);
+
+var maxX = abcMaxX > defMaxX ? abcMaxX : defMaxX;
+var maxY = abcMaxY > defMaxY ? abcMaxY : defMaxY;
+
+for(var y=0; y <= maxY; y++)
+{
+  var line = "";
+  for(var x=0; x <= maxX; x++)
+  {
+    line+=things.Any(i => i == $"{y}:{x}")? "X" : ".";
+  }
+  Console.WriteLine(line);
+}*/
 

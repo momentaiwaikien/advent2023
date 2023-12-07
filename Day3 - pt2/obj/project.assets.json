@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Repos\\advent of code\\Day3 - Someone Elses Solution\\Day3.csproj",
+      "projectUniqueName": "C:\\Repos\\advent2023\\Day3 - pt2\\Day3.csproj",
       "projectName": "Day3",
-      "projectPath": "C:\\Repos\\advent of code\\Day3 - Someone Elses Solution\\Day3.csproj",
+      "projectPath": "C:\\Repos\\advent2023\\Day3 - pt2\\Day3.csproj",
       "packagesPath": "C:\\Users\\kenny.chung\\.nuget\\packages\\",
-      "outputPath": "C:\\Repos\\advent of code\\Day3 - Someone Elses Solution\\obj\\",
+      "outputPath": "C:\\Repos\\advent2023\\Day3 - pt2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Repos\\NuGet.Config",
