@@ -1,0 +1,14 @@
+C:\Repos\advent of code\Day1\DayOne\bin\Debug\net8.0\DayOne.exe
+C:\Repos\advent of code\Day1\DayOne\bin\Debug\net8.0\DayOne.deps.json
+C:\Repos\advent of code\Day1\DayOne\bin\Debug\net8.0\DayOne.runtimeconfig.json
+C:\Repos\advent of code\Day1\DayOne\bin\Debug\net8.0\DayOne.dll
+C:\Repos\advent of code\Day1\DayOne\bin\Debug\net8.0\DayOne.pdb
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\DayOne.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\DayOne.AssemblyInfoInputs.cache
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\DayOne.AssemblyInfo.cs
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\DayOne.csproj.CoreCompileInputs.cache
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\DayOne.dll
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\refint\DayOne.dll
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\DayOne.pdb
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\DayOne.genruntimeconfig.cache
+C:\Repos\advent of code\Day1\DayOne\obj\Debug\net8.0\ref\DayOne.dll
