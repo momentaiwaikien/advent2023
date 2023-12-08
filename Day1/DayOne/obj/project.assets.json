@@ -13,14 +13,14 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\repos\\advent of code\\Day1\\DayOne\\DayOne.csproj",
+      "projectUniqueName": "C:\\Repos\\advent2023\\Day1\\DayOne\\DayOne.csproj",
       "projectName": "DayOne",
-      "projectPath": "C:\\repos\\advent of code\\Day1\\DayOne\\DayOne.csproj",
+      "projectPath": "C:\\Repos\\advent2023\\Day1\\DayOne\\DayOne.csproj",
       "packagesPath": "C:\\Users\\kenny.chung\\.nuget\\packages\\",
-      "outputPath": "C:\\repos\\advent of code\\Day1\\DayOne\\obj\\",
+      "outputPath": "C:\\Repos\\advent2023\\Day1\\DayOne\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\repos\\NuGet.Config",
+        "C:\\Repos\\NuGet.Config",
         "C:\\Users\\kenny.chung\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

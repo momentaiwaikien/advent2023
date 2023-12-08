@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Repos\\advent of code\\DayTwo\\DayTwo.csproj": {}
+    "C:\\Repos\\advent2023\\Day2\\DayTwo.csproj": {}
   },
   "projects": {
-    "C:\\Repos\\advent of code\\DayTwo\\DayTwo.csproj": {
+    "C:\\Repos\\advent2023\\Day2\\DayTwo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Repos\\advent of code\\DayTwo\\DayTwo.csproj",
+        "projectUniqueName": "C:\\Repos\\advent2023\\Day2\\DayTwo.csproj",
         "projectName": "DayTwo",
-        "projectPath": "C:\\Repos\\advent of code\\DayTwo\\DayTwo.csproj",
+        "projectPath": "C:\\Repos\\advent2023\\Day2\\DayTwo.csproj",
         "packagesPath": "C:\\Users\\kenny.chung\\.nuget\\packages\\",
-        "outputPath": "C:\\Repos\\advent of code\\DayTwo\\obj\\",
+        "outputPath": "C:\\Repos\\advent2023\\Day2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Repos\\NuGet.Config",

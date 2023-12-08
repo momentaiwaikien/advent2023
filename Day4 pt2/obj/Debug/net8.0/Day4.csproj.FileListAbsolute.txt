@@ -1,0 +1,15 @@
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\Day4.GeneratedMSBuildEditorConfig.editorconfig
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\Day4.AssemblyInfoInputs.cache
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\Day4.AssemblyInfo.cs
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\Day4.csproj.CoreCompileInputs.cache
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\Day4.sourcelink.json
+C:\Repos\advent2023\Day4 pt2\bin\Debug\net8.0\Day4.exe
+C:\Repos\advent2023\Day4 pt2\bin\Debug\net8.0\Day4.deps.json
+C:\Repos\advent2023\Day4 pt2\bin\Debug\net8.0\Day4.runtimeconfig.json
+C:\Repos\advent2023\Day4 pt2\bin\Debug\net8.0\Day4.dll
+C:\Repos\advent2023\Day4 pt2\bin\Debug\net8.0\Day4.pdb
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\Day4.dll
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\refint\Day4.dll
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\Day4.pdb
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\Day4.genruntimeconfig.cache
+C:\Repos\advent2023\Day4 pt2\obj\Debug\net8.0\ref\Day4.dll
