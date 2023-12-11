@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-public class Seed
+﻿public class Seed
 {
   public Seed()
   {
@@ -24,7 +22,7 @@ public class Seed
 
     if (maps.Count == 0)
     {
-      returnSeeds.Add(Seed.Create(Min, Max));
+      returnSeeds.Add(Create(Min, Max));
       return returnSeeds;
     }
     if (maps.Any(x => x.Min == Min && x.Max == Max))
@@ -45,14 +43,14 @@ public class Seed
     {
       if(map.Min > currMin)
       {
-        returnSeeds.Add(Seed.Create(currMin, map.Min-1));
+        returnSeeds.Add(Create(currMin, map.Min-1));
       }
       currMin = map.Max+1;
     }
 
     if (currMin < topMax)
     {
-      returnSeeds.Add(Seed.Create(currMin, Max));
+      returnSeeds.Add(Create(currMin, Max));
     }
     
     //if (returnSeeds.Count == 0) Console.WriteLine($"XXX NO PARTING DONE XXX");

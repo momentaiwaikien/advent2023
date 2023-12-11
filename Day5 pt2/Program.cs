@@ -22,13 +22,9 @@ var SeedsList = new List<long>(ruleSets[1].Split(' ', StringSplitOptions.RemoveE
 var Seeds = new Dictionary<long, long>();
 
 for(var sd = 0; sd<SeedsList.Count; sd+=2)
-//for(var sd = 0; sd<2; sd+=2)
 {
   Seeds.Add(SeedsList[sd], SeedsList[sd+1]);
 }
-
-Console.Write($"seeds: ");
-Seeds.ToList().ForEach(x => Console.Write($"{x.Key} {x.Value} "));
 
 ruleSets.RemoveAt(0);
 ruleSets.RemoveAt(0);
@@ -72,7 +68,14 @@ var currSeeds = new List<Seed>(Seeds.ToList().OrderBy(x => x.Key).Select(x => ne
       
       var survivors = currSeed.SplitSeed(matchedSeeds);
       //newSeeds.ForEach(x => Console.WriteLine($"SurvivorSeeds: {x.Min}:{x.Max}:{x.Diff}"));
-      
+      matchedSeeds.AddRange(survivors);
+      //Console.WriteLine($"currSeed: {currSeed.Min}:{currSeed.Max}:{currSeed.Diff} > Matched {matchedSeeds.Min(x => x.Min)}:{matchedSeeds.Max(x => x.Max)}:{matchedSeeds.Max(x => x.Max)-matchedSeeds.Min(x => x.Min)+1}");
+      /*if (currSeed.Min != matchedSeeds.Min(x => x.Min) 
+      && currSeed.Max != matchedSeeds.Max(x => x.Max)
+      && currSeed.Diff != matchedSeeds.Max(x => x.Max) - matchedSeeds.Min(x => x.Min) + 1 )
+      {
+        Console.WriteLine("_____________________________Housten it's broke_____________________________");
+      }*/
       newSeeds.AddRange(survivors);
     }
     Console.WriteLine($"diffs: {newSeeds.Sum(x => x.Diff)}");

@@ -37,12 +37,12 @@
   {
     //Console.WriteLine($"Get Destination - {SourceMin}:{SourceMax}:{SourceDiff} == {seed.Min}:{seed.Max}:{seed.Diff}");
 
-    var minDiff = seed.Min - SourceMin;
-    var max = DestinationMin+minDiff+seed.Diff-1;
+    var lowerDiff = seed.Min - SourceMin;
+    var max = DestinationMin+lowerDiff+seed.Max-seed.Min;
     
     if (DestinationMax<max) Console.WriteLine("Something has fk'd up");
 
-    var destinationSeed = Seed.Create(DestinationMin+minDiff, max);
+    var destinationSeed = Seed.Create(DestinationMin+lowerDiff, max);
     //Console.WriteLine($"Destination {destinationSeed.Min}:{destinationSeed.Max}:{destinationSeed.Diff}");
     return destinationSeed;
   }
