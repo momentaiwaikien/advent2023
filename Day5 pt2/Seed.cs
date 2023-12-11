@@ -27,7 +27,7 @@
     }
     if (maps.Any(x => x.Min == Min && x.Max == Max))
     {
-      Console.WriteLine($"FUll House {Min}:{Max}:{Diff}");
+      Console.WriteLine($"FUll House");
       return returnSeeds;
     }
     
