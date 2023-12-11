@@ -21,8 +21,8 @@ var SeedsList = new List<long>(ruleSets[1].Split(' ', StringSplitOptions.RemoveE
 
 var Seeds = new Dictionary<long, long>();
 
-//for(var sd = 0; sd<SeedsList.Count; sd+=2)
-for(var sd = 16; sd<18; sd+=2)//sd<SeedsList.Count; sd+=2)
+for(var sd = 0; sd<SeedsList.Count; sd+=2)
+//for(var sd = 16; sd<18; sd+=2)//sd<SeedsList.Count; sd+=2)
 {
   Seeds.Add(SeedsList[sd], SeedsList[sd+1]);
 }
