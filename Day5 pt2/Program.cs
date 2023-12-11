@@ -10,6 +10,9 @@ var IsWithinRange = (long number, long rangeStart, long rangeEnd) =>
 
 var texts = Regex.Replace(readText, "([a-zA-Z]| {2}|-)+", " ");
 
+var startTime = DateTime.Now;
+Console.WriteLine($"Start: {startTime.ToLongTimeString()}");
+
 var ruleSets = texts.Split(':', StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).ToList();
 
 var stepsRange = new Dictionary<long, List<SourceMap>>();
@@ -24,6 +27,9 @@ for(var sd = 0; sd<SeedsList.Count; sd+=2)
   Seeds.Add(SeedsList[sd], SeedsList[sd+1]);
 }
 
+Console.Write($"seeds: ");
+Seeds.ToList().ForEach(x => Console.Write($"{x.Key} {x.Value} "));
+
 ruleSets.RemoveAt(0);
 ruleSets.RemoveAt(0);
 var index = 0;
@@ -32,7 +38,7 @@ var index = 0;
 ruleSets.ForEach(x => {
   var parts = x.Split('\n', StringSplitOptions.RemoveEmptyEntries);
   var rules = parts.Select(i=>i.Split(' ').Select(q => long.Parse(q)).ToList()).ToList();  
-  stepsRange.Add(index, rules.Select(rule => new SourceMap(rule[0], rule[1], rule[2])).ToList().OrderBy(o => o.SourceMin).ToList());
+  stepsRange.Add(index, rules.Select(rule => new SourceMap(rule[0], rule[1], rule[2])).ToList().ToList());
   index++;
 });
 
@@ -40,32 +46,42 @@ var currSeeds = new List<Seed>(Seeds.ToList().OrderBy(x => x.Key).Select(x => ne
 
   for(var i = 0; i < stepsRange.Count; i++)
   {
+    Console.WriteLine($"====================CURRENT ITER {i}==================");
+    //currSeeds.ForEach(x => Console.WriteLine($"CurrSeeds: {x.Min}:{x.Max}:{x.Diff}"));
+    //Console.WriteLine($"CurrDiff: {currSeeds.Sum(x => x.Diff)}");
     var newSeeds = new List<Seed>();
     List<SourceMap> currentMaps = stepsRange[i];
-    Console.WriteLine(i);
+    //currentMaps.ForEach(m => Console.WriteLine($"CurrentMaps: From {m.SourceMin}:{m.SourceMax}:{m.SourceDiff} TO {m.DestinationMin}:{m.DestinationMax}:{m.DestinationDiff}"));
     foreach(var currSeed in currSeeds)
     {
-      List<Seed> matchedSeeds = new List<Seed>();
-      var matchedmaps = currentMaps.Where(x => (currSeed.Min >= x.SourceMin && currSeed.Min <= x.SourceMax)||(currSeed.Max <= x.SourceMax && currSeed.Max >= x.SourceMin)).ToList();
+      var matchedSeeds = new List<Seed>();
+      var matchedMaps = currentMaps.Where(map => (currSeed.Min >= map.SourceMin && currSeed.Min <= map.SourceMax)||(currSeed.Max <= map.SourceMax && currSeed.Max >= map.SourceMin)).ToList();
         
-      matchedmaps.ForEach(x=> {
+      matchedMaps.ForEach(matchedMap=> {
         //Console.Write($"## matched map {x.SourceMin}-{x.SourceMax}");
-        var matchedSeed = x.GetSourceMatch(currSeed);
+        var matchedSeed = matchedMap.GetSourceMatch(currSeed);
         matchedSeeds.Add(matchedSeed);
-        //Console.Write($"## matched seed {matchedSeed.Min}-{matchedSeed.Max}");
-        var destinationSeed = x.GetDestination(matchedSeed);
+      
+        //matchedSeeds.ForEach(x => Console.WriteLine($"MatchedSeeds: {x.Min}:{x.Max}:{x.Diff}"));
+        Console.WriteLine($"## CurrSeed {currSeed.Min}:{currSeed.Max}:{currSeed.Diff} matched seed {matchedSeed.Min}:{matchedSeed.Max}:{matchedSeed.Diff} - map {matchedMap.SourceMin}:{matchedMap.SourceMax} >> {matchedMap.DestinationMin}:{matchedMap.DestinationMax} ({matchedMap.SourceDiff})");
+        var destinationSeed = matchedMap.GetDestination(matchedSeed);
         //Console.WriteLine($"##  DestinationSeed {destinationSeed.Min}-{destinationSeed.Max}");
         newSeeds.Add(destinationSeed);
       });
-
+      //newSeeds.ForEach(x => Console.WriteLine($"AfterMatch: {x.Min}:{x.Max}:{x.Diff}"));
+      
       var survivors = currSeed.SplitSeed(matchedSeeds);
-      survivors.ForEach(x => Console.WriteLine($"survivors {x.Min}-{x.Max}"));
+      //newSeeds.ForEach(x => Console.WriteLine($"SurvivorSeeds: {x.Min}:{x.Max}:{x.Diff}"));
+      
       newSeeds.AddRange(survivors);
     }
-    Console.WriteLine("");
-    newSeeds.ForEach(x => Console.WriteLine($"{x.Min}:{x.Max}"));
-    currSeeds = new List<Seed>(newSeeds);
+    Console.WriteLine($"diffs: {newSeeds.Sum(x => x.Diff)}");
+    currSeeds = new List<Seed>(newSeeds.OrderBy(x => x.Min));
+    currSeeds.ForEach(x => Console.WriteLine($"newSeeds: {x.Min}:{x.Max}:{x.Diff}"));
   }
 
-var min = currSeeds.Min(x => x.Min);
-Console.WriteLine(min);
+var min = currSeeds.OrderBy(x => x.Min).First();
+Console.WriteLine($"Min {min.Min}:{min.Max}:{min.Diff}");
+var endTime = DateTime.Now;
+Console.WriteLine($"End: {endTime.ToLongTimeString()}");
+Console.WriteLine($"Elapsed Time: {(endTime - startTime).TotalSeconds}");
