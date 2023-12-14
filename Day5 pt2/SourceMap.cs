@@ -1,33 +1,42 @@
-﻿public class SourceMap
+﻿using System.Numerics;
+public class SourceMap
 {
-  public SourceMap(long dest, long src, long diff)
+  public SourceMap(BigInteger dest, BigInteger src, BigInteger diff)
   {
     DestinationMin = dest;
     DestinationMax = dest + diff-1;
     SourceMin = src;
     SourceMax = src + diff-1;
+    if (SourceMax < SourceMin)
+    {
+      throw new Exception ($"{dest}:{src}:{diff}");
+    }
   }
 
-  public long SourceMin {get;set;}
-  public long SourceMax {get;set;}
+  public BigInteger SourceMin {get;set;}
+  public BigInteger SourceMax {get;set;}
 
-  public long SourceDiff => SourceMax - SourceMin + 1;
+  public BigInteger SourceDiff => SourceMax - SourceMin + 1;
 
-  public long DestinationMin {get;set;}
-  public long DestinationMax {get;set;}
-  public long DestinationDiff => DestinationMax - DestinationMin + 1;
+  public BigInteger DestinationMin {get;set;}
+  public BigInteger DestinationMax {get;set;}
+  public BigInteger DestinationDiff => DestinationMax - DestinationMin + 1;
 
 
-  public bool InSource (long src) 
+  public bool InSource (BigInteger src) 
   {
     return src >= SourceMin && src <= SourceMax;
   }
 
   public Seed GetSourceMatch(Seed seed)
   {
-    //79 > 14
-    long min = seed.Min >= SourceMin ? seed.Min : SourceMin;
-    long max = seed.Max <= SourceMax ? seed.Max : SourceMax;
+    BigInteger min = seed.Min >= SourceMin ? seed.Min : SourceMin;
+    BigInteger max = seed.Max <= SourceMax ? seed.Max : SourceMax;
+    if (SourceMin >= seed.Min && SourceMax <= seed.Max)
+    {
+      min = SourceMin;
+      max = SourceMax;
+    }
     var mSeed = Seed.Create(min, max);
     //Console.WriteLine ($"Seed: {seed.Min}:{seed.Max}:{seed.Diff} >> Matched: {mSeed.Min}:{mSeed.Max}:{mSeed.Diff}");
     return mSeed;

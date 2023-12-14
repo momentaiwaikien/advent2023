@@ -1,20 +1,36 @@
-﻿public class Seed
+﻿using System.Numerics;
+
+public class Seed
 {
   public Seed()
   {
   }
 
-  public Seed(long src, long diff)
+  public Seed(BigInteger src, BigInteger diff)
   {
     Min = src;
     Max = src + diff-1;
-    Console.WriteLine($"AddSeed {Min}:{Max}:{Diff}");
+    //Console.WriteLine($"AddSeed {Min}:{Max}:{Diff}");
+    
+    if (Max < Min)
+    {
+      throw new Exception ($"{Min}:{Max}:{Diff}");
+    }
   }
 
-  public long Min {get;set;}
-  public long Max {get;set;}
+  public BigInteger Min {get;set;}
+  public BigInteger Max {get;set;}
 
-  public long Diff => Max-Min+1;
+  private BigInteger GetDiff()
+  {
+    if (Max < Min)
+    {
+      throw new Exception($"{Min}:{Max}:{Diff}");
+    }
+    return Max - Min + 1;
+  }
+
+  public BigInteger Diff => GetDiff();
 
   public List<Seed> SplitSeed(List<Seed> maps)
   {
@@ -27,7 +43,7 @@
     }
     if (maps.Any(x => x.Min == Min && x.Max == Max))
     {
-      Console.WriteLine($"FUll House");
+      //Console.WriteLine($"FUll House");
       return returnSeeds;
     }
     
@@ -59,7 +75,7 @@
     return returnSeeds;
   }
 
-  public static Seed Create(long min, long max)
+  public static Seed Create(BigInteger min, BigInteger max)
   {
     return new Seed
     {
